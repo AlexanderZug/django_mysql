@@ -18,6 +18,9 @@ services:
     image: mysql:8.0
     ports:
       - '3306:3306'
-    env_file: .env
+    environment:
+      MYSQL_DATABASE: 'django_db'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    restart: always
     volumes:
       - ./mysql:/var/lib/mysql
