@@ -24,3 +24,17 @@ services:
     restart: always
     volumes:
       - ./mysql:/var/lib/mysql
+
+  debug:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8011-8020:8011-8020'
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "while ! nc -z db 3306; do sleep 1; done; python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - web
+      - db
